@@ -4,18 +4,25 @@ import com.sparta.memo.dto.MemoRequestDto;
 import com.sparta.memo.dto.MemoResponseDto;
 import com.sparta.memo.entity.Memo;
 import com.sparta.memo.repository.MemoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class MemoService {
+@Service // component는 bean 객체로 등록시킴. 근데 service는 어떻게 오류가 안나지? service애너테이션에 접속하면
+//component가 붙어있다.
+public class MemoService { //bean 객체로 등록되었으며, memoService라는 이름으로 등록되었다. 확인방법은 3-5 / 09:01
     //controller에서 처리했던 주요 로직들을 모두 service 클래스로 옮겼다.
 
 
     private final MemoRepository memoRepository;
 
+    // 생성자가 "하나"만 있다면 bean을 사용할때 써야할 autowired라는 애네테이션을 사용안해도 자동으로 부여된다.
     public MemoService(MemoRepository memoRepository) { //spring에서 따로 관리하는 부분이다.
         this.memoRepository = memoRepository;
     }
+
     public MemoResponseDto createMemo(MemoRequestDto requestDto) {
         //MemoResponseDto는 반환타입이다. controller에 return 을 써놓았으므로
         // RequestDto -> Entity
