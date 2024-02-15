@@ -4,7 +4,6 @@ import com.sparta.memo.dto.MemoRequestDto;
 import com.sparta.memo.dto.MemoResponseDto;
 import com.sparta.memo.entity.Memo;
 import com.sparta.memo.repository.MemoRepository;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
@@ -14,8 +13,8 @@ public class MemoService {
 
     private final MemoRepository memoRepository;
 
-    public MemoService(JdbcTemplate jdbcTemplate) { //spring에서 따로 관리하는 부분이다.
-        this.memoRepository = new MemoRepository(jdbcTemplate);
+    public MemoService(MemoRepository memoRepository) { //spring에서 따로 관리하는 부분이다.
+        this.memoRepository = memoRepository;
     }
     public MemoResponseDto createMemo(MemoRequestDto requestDto) {
         //MemoResponseDto는 반환타입이다. controller에 return 을 써놓았으므로
