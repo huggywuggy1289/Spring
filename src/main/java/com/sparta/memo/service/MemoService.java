@@ -7,6 +7,7 @@ import com.sparta.memo.repository.MemoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -39,32 +40,34 @@ public class MemoService { //bean 객체로 등록되었으며, memoService라�
     public List<MemoResponseDto> getMemos() {
 
         // DB 조회
-        return memoRepository.findAll(); //전달할 파라미터는 없는 상태이다.
+        return memoRepository.findAll().stream().map(MemoResponseDto::new).toList();
     }
 
+    @Transactional
     public Long updateMemo(Long id, MemoRequestDto requestDto) {
 
         // 해당 메모가 DB에 존재하는지 확인
-        Memo memo = memoRepository.findById(id); //접근지정자를 수정하므로서 오류 사라짐.
-        if(memo != null) {
-            // memo 내용 수정
-            memoRepository.update(id, requestDto);
-            return id;
-        } else {
-            throw new IllegalArgumentException("선택한 메모는 존재하지 않습니다.");
-        }
-    }
+        Memo memo = findMemo(id);
 
+        memo.update(requestDto);
+
+        return id;
+
+    }
 
     public Long deleteMemo(Long id) {
         // 해당 메모가 DB에 존재하는지 확인
-        Memo memo =memoRepository.findById(id);
-        if(memo != null) {
-            // memo 삭제
-            memoRepository.delete(id);
-            return id;
-        } else {
-            throw new IllegalArgumentException("선택한 메모는 존재하지 않습니다.");
-        }
+        Memo memo = findMemo(id);
+
+        memoRepository.delete(memo); //entity 객체를 지우는 것. 여기서는 memo
+
+        return id;
+
+    }
+
+    private Memo findMemo(Long id){
+        return memoRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("선택한 메모는 존재하지 않습니다.")
+        );
     }
 }
