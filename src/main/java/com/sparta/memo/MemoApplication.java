@@ -2,7 +2,9 @@ package com.sparta.memo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+@EnableJpaAuditing //JPA AUDITING을 쓰겠다고 알려줘야함.
 @SpringBootApplication
 public class MemoApplication {
 
