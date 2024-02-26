@@ -40,7 +40,7 @@ public class MemoService { //bean 객체로 등록되었으며, memoService라�
     public List<MemoResponseDto> getMemos() {
 
         // DB 조회
-        return memoRepository.findAll().stream().map(MemoResponseDto::new).toList();
+        return memoRepository.findAllByOrderByModifiedAtDesc().stream().map(MemoResponseDto::new).toList();
     }
 
     @Transactional
