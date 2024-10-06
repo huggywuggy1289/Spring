@@ -43,17 +43,17 @@ public class MemoService { //bean 객체로 등록되었으며, memoService라�
         return memoRepository.findAllByOrderByModifiedAtDesc().stream().map(MemoResponseDto::new).toList();
     }
 
-    @Transactional
-    public Long updateMemo(Long id, MemoRequestDto requestDto) {
-
-        // 해당 메모가 DB에 존재하는지 확인
-        Memo memo = findMemo(id);
-
-        memo.update(requestDto);
-
-        return id;
-
-    }
+//    @Transactional
+//    public Long updateMemo(Long id, MemoRequestDto requestDto) {
+//
+//        // 해당 메모가 DB에 존재하는지 확인
+//        Memo memo = findMemo(id);
+//
+//        memo.update(requestDto);
+//
+//        return id;
+//
+//    }
 
     public Long deleteMemo(Long id) {
         // 해당 메모가 DB에 존재하는지 확인
